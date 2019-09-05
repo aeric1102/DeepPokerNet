@@ -1,0 +1,22 @@
+card: 0~12 spade, 13~25 heart, 26~38 diamond, 39~51 club, 52 fold card
+
+action:
+    int: 12 classes, from 0 to 11
+    0: FOLD, 
+    1: CHECK/CALL,
+    2: 10 % bet rate,
+    3: 20 % bet rate,
+    ...
+    10: 90 % bet rate,
+    11: all in
+
+observation:
+    list: [time_step, cards, table_cards, actions, valid_action, bet_info]
+        All values are numpy array. When one call env.step, it will return observation to the other.
+        So it's for the caller's opponent.
+            time_step: shape=(2,). [i-th round in one game, j-th action in one round]
+            cards: shape=(2,). Your cards, not sorted.
+            table_cards: shape=(5,). observed table cards, disclosed w.r.t. time_step.
+            actions: shape=(2,). [Your previous action, opponent's previous action].
+            valid_action: shape=(12,). Your valid action. 1:valid, 0:invalid
+            bet_info: shape=(5,). [Your money, opponent's money, your bet_amount, opponent's bet_amount, pot]
